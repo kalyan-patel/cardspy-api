@@ -1,9 +1,16 @@
 import json
+import os
 import requests
 
+from dotenv import load_dotenv
 
-CLASH_ROYALE_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6Ijc3N2Q3NjVmLTZhZDktNDJkNi1iZjBiLWQ3ZWM2MmY4YjU4NiIsImlhdCI6MTc2NTU1Nzc2OCwic3ViIjoiZGV2ZWxvcGVyLzYzYzQwZjA0LTNiMmUtYzJlMi1jNjNhLTU2NDFiYTA1ZjQ5YyIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIyNC42Mi4xNDEuMTkxIl0sInR5cGUiOiJjbGllbnQifV19.ON0aOt7anGd58zkCq8Cbyss9Zy2CPyKhcDkP4Dp9dzpN-t6VVjDwaHmgsF8-T2y8-UzktF8NYmg4kw8UKFMzsA"
+load_dotenv()
+
 BASE_API_URL = "https://api.clashroyale.com/v1"
+
+CLASH_ROYALE_API_TOKEN = os.getenv("CLASH_ROYALE_API_TOKEN")
+if not CLASH_ROYALE_API_TOKEN:
+    raise RuntimeError("Missing <CLASH_ROYALE_API_TOKEN>")
 
 
 def query_api(path: str, params: dict={}):
@@ -65,7 +72,3 @@ def last_pvp_deck(player_tag: str):
         })
     
     return deck
-
-
-# logs = query_api(f"/players/{encode_tag("#VL2VYURJ0")}/battlelog")
-# print(len(logs))
