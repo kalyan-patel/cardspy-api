@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from card_spy import get_last_deck
+from spy_deck import spy_deck
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -20,5 +20,5 @@ class DeckRequest(BaseModel):
 @app.post("/deck")
 def deck(req: DeckRequest):
     return {
-        "deck": get_last_deck(req.player, req.clan)
+        "deck": spy_deck(req.player, req.clan)
     }

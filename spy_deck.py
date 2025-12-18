@@ -10,7 +10,7 @@ BASE_API_URL = "https://api.clashroyale.com/v1"
 
 CLASH_ROYALE_API_TOKEN = os.getenv("CLASH_ROYALE_API_TOKEN")
 if not CLASH_ROYALE_API_TOKEN:
-    raise RuntimeError("Missing <CLASH_ROYALE_API_TOKEN>")
+    raise RuntimeError("Missing <CLASH_ROYALE_API_TOKEN> environment variable")
 
 
 def query_api(path: str, params: dict={}):
@@ -35,7 +35,7 @@ def encode_tag(tag: str):
     return "%23" + tag[1:]
 
 
-def get_last_deck(player_name: str, clan_name: str):
+def spy_deck(player_name: str, clan_name: str):
 
     clans = query_api("/clans", params={ "name": clan_name })
     
