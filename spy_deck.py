@@ -35,7 +35,7 @@ def encode_tag(tag: str):
     return "%23" + tag[1:]
 
 
-def spy_deck(player_name: str, clan_name: str):
+def spy_deck(player_name: str, clan_name: str, game_type: str): # game_type must be 'PvP' or 'pathOfLegend'
 
     clans = query_api("/clans", params={ "name": clan_name })
     
@@ -47,16 +47,16 @@ def spy_deck(player_name: str, clan_name: str):
 
             for member in members:
                 if member["name"] == player_name:
-                    return last_pvp_deck(member["tag"])
+                    return last_deck_for_game_type(member["tag"], game_type)
 
 
-def last_pvp_deck(player_tag: str):
+def last_deck_for_game_type(player_tag: str, game_type: str):
 
     icon_keys = {0: "medium", 1: "evolutionMedium", 2: "heroMedium"}
 
     logs = query_api(f"/players/{encode_tag(player_tag)}/battlelog")
 
-    first_pvp_log = next((log for log in logs if log["type"] == "PvP"), None)
+    first_pvp_log = next((log for log in logs if log["type"] == game_type), None)
     player = first_pvp_log["team"][0]
     cards = player["cards"]
 

@@ -16,9 +16,10 @@ app.add_middleware(
 class DeckRequest(BaseModel):
     player: str
     clan: str
+    game_type: str
 
 @app.post("/deck")
 def deck(req: DeckRequest):
     return {
-        "deck": spy_deck(req.player, req.clan)
+        "deck": spy_deck(req.player, req.clan, req.game_type)
     }
